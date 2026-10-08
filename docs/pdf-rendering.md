@@ -74,11 +74,13 @@ Paragraphs. The chapter-scrollbar toggle applies to both.
 
 ## Covers
 
-The main process has no rasterizer, so `get-book-cover` returns `null` for a
-PDF and the sidebar renders page 1 itself through `renderPdfThumbnail`. Those
-thumbnails are cached in memory for the session only — unlike EPUB and MOBI
-covers, they are not written to `<userData>/covers`. Requests are queued one at
-a time because each one reads a whole file.
+The sidebar checks `get-cached-pdf-cover` before loading pdf.js or reading the
+PDF. On a miss, it renders page 1 through `renderPdfThumbnail` and persists the
+JPEG through `cache-pdf-cover` in `<userData>/covers/pdf-v1-<sha1>.uri`. The key
+includes the file path, size, and mtime, so subsequent sessions reuse the icon
+and changed files get a new thumbnail. Main checks the key again before saving
+to avoid caching an old rendering for a changed file. Failed renders stay
+uncached. Requests are queued one at a time because each miss reads a whole file.
 
 ## Getting the bytes
 

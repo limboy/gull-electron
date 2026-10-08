@@ -11,6 +11,8 @@ contextBridge.exposeInMainWorld('epub', {
   parse: (filePath) => ipcRenderer.invoke('parse-epub', filePath),
   readBookFile: (filePath) => ipcRenderer.invoke('read-book-file', filePath),
   getBookCover: (filePath) => ipcRenderer.invoke('get-book-cover', filePath),
+  getCachedPdfCover: (filePath) => ipcRenderer.invoke('get-cached-pdf-cover', filePath),
+  cachePdfCover: (filePath, key, dataUri) => ipcRenderer.invoke('cache-pdf-cover', filePath, key, dataUri),
   onOpenFile: (cb) => subscribe('open-file', cb),
   signalReady: () => ipcRenderer.send('renderer-ready'),
   checkPathsExistence: (paths) => ipcRenderer.invoke('check-paths-existence', paths),

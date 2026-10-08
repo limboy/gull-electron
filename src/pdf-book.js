@@ -216,7 +216,7 @@ export async function extractPdfText(filePath, { signal } = {}) {
 /**
  * Render page 1 as a cover thumbnail. The main process caches EPUB and MOBI
  * covers on disk, but it has no rasterizer for PDF page content, so these are
- * produced here and cached in memory by the caller.
+ * produced here and persisted through main by the caller.
  */
 export async function renderPdfThumbnail(filePath, maxHeight = 96) {
   const opened = books.get(filePath);

@@ -369,8 +369,18 @@ let pdfCoverQueue = Promise.resolve();
 function loadPdfCover(filePath) {
   pdfCoverQueue = pdfCoverQueue
     .then(async () => {
+      const { key, cover } = await window.epub.getCachedPdfCover(filePath);
+      if (cover) return cover;
       const pdf = await getPdfModule();
-      return pdf.renderPdfThumbnail(filePath, COVER_THUMBNAIL_HEIGHT);
+      const thumbnail = await pdf.renderPdfThumbnail(filePath, COVER_THUMBNAIL_HEIGHT);
+      if (thumbnail) {
+        try {
+          await window.epub.cachePdfCover(filePath, key, thumbnail);
+        } catch (error) {
+          console.warn('Failed to cache PDF cover', filePath, error);
+        }
+      }
+      return thumbnail;
     })
     .catch((error) => {
       console.warn('Failed to render PDF cover', filePath, error);

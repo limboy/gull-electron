@@ -727,6 +727,31 @@ function writeCachedCover(key, dataUri) {
   }
 }
 
+function getPdfCoverKey(filePath) {
+  validateBookPath(filePath);
+  if (path.extname(filePath).toLowerCase() !== '.pdf') {
+    throw new Error('PDF cover cache only serves PDF files');
+  }
+  // A separate namespace ignores legacy empty PDF entries from get-book-cover.
+  return `pdf-v1-${coverCacheKey(filePath)}`;
+}
+
+function getCachedPdfCover(filePath) {
+  const key = getPdfCoverKey(filePath);
+  return { key, cover: readCachedCover(key) || null };
+}
+
+function cachePdfCover(filePath, key, dataUri) {
+  const currentKey = getPdfCoverKey(filePath);
+  if (key !== currentKey) return false; // The book changed while page 1 rendered.
+  if (typeof dataUri !== 'string' || dataUri.length > 1024 * 1024
+    || !/^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(dataUri)) {
+    throw new Error('Invalid PDF thumbnail');
+  }
+  writeCachedCover(currentKey, dataUri);
+  return true;
+}
+
 function getBookCover(filePath) {
   let key = null;
   try {
@@ -1058,6 +1083,16 @@ app.whenReady().then(() => {
       throw new Error('Invalid book path');
     }
     return getBookCover(filePath);
+  });
+
+  ipcMain.handle('get-cached-pdf-cover', (event, filePath) => {
+    assertTrustedIpc(event);
+    return getCachedPdfCover(filePath);
+  });
+
+  ipcMain.handle('cache-pdf-cover', (event, filePath, key, dataUri) => {
+    assertTrustedIpc(event);
+    return cachePdfCover(filePath, key, dataUri);
   });
 
   ipcMain.handle('open-external', async (event, url) => {
