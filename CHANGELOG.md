@@ -3,6 +3,16 @@
 All notable changes to this project are documented here.
 This file is generated automatically from [Conventional Commits](https://www.conventionalcommits.org/) — run `npm run changelog` to regenerate.
 
+## [v2.0.1](https://github.com/limboy/gull/compare/v2.0.0...v2.0.1) - 2026-09-07
+
+### Features
+
+- **ui:** add full-width mode for reflowable books ([b10ea8f](https://github.com/limboy/gull/commit/b10ea8fa1847cd07aef7ecd0b84957bd591d022b))
+
+### Documentation
+
+- update CHANGELOG for v2.0.0 ([6bb2ffb](https://github.com/limboy/gull/commit/6bb2ffb8e65f420705ed58aa5567efcdff0767b9))
+
 ## [v2.0.0](https://github.com/limboy/gull/compare/v1.4.1...v2.0.0) - 2026-09-02
 
 ### Features
