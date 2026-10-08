@@ -3,6 +3,20 @@
 All notable changes to this project are documented here.
 This file is generated automatically from [Conventional Commits](https://www.conventionalcommits.org/) — run `npm run changelog` to regenerate.
 
+## [v2.0.2](https://github.com/limboy/gull/compare/v2.0.1...v2.0.2) - 2026-10-08
+
+### Performance
+
+- **sidebar:** persist PDF cover thumbnails across sessions ([08d4571](https://github.com/limboy/gull/commit/08d4571cc59852f686445628a6bd016f7f9813a2))
+
+### Documentation
+
+- update CHANGELOG for v2.0.1 ([589f15c](https://github.com/limboy/gull/commit/589f15c3ed078d4ca3a9427fd24f2c9defc4c141))
+
+### Chores
+
+- **release:** 2.0.2 ([57958a1](https://github.com/limboy/gull/commit/57958a102fdca224eca6db4d92b817e745d28bcc))
+
 ## [v2.0.1](https://github.com/limboy/gull/compare/v2.0.0...v2.0.1) - 2026-09-07
 
 ### Features
